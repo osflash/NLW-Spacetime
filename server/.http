@@ -1,0 +1,32 @@
+GET http://localhost:3333/memories
+
+###
+
+GET http://localhost:3333/memories/87e3385e-cbcf-454f-80f7-65dbbee82090
+
+### 
+
+POST http://localhost:3333/memories
+content-type: application/json
+
+{
+  "content": "test",
+  "coverUrl": "https://github.com/osflash.png",
+  "isPublic": true
+}
+
+###
+
+PUT  http://localhost:3333/memories/87e3385e-cbcf-454f-80f7-65dbbee82090
+content-type: application/json
+
+{
+  "content": "oi!",
+  "coverUrl": "https://github.com/osflash.png",
+  "isPublic": true
+}
+
+
+###
+
+DELETE http://localhost:3333/memories/87e3385e-cbcf-454f-80f7-65dbbee82090
