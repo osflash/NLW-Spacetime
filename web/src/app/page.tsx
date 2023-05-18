@@ -1,13 +1,16 @@
 import React from 'react'
 
-import Image from 'next/image'
-import Link from 'next/link'
+import { cookies } from 'next/headers'
 
-import { User } from 'lucide-react'
-
-import nlwLogo from '../assets/nlw-spacetime-logo.svg'
+import { CopyRight } from '~/components/CopyRight'
+import { EmptyMemories } from '~/components/EmptyMemories'
+import { Hero } from '~/components/Hero'
+import { Profile } from '~/components/Profile'
+import { SignIn } from '~/components/SignIn'
 
 const Home: React.FC = () => {
+  const isAuthenticated = cookies().has('token')
+
   return (
     <main className="grid min-h-screen grid-cols-2">
       {/* Left */}
@@ -18,67 +21,16 @@ const Home: React.FC = () => {
         {/* Stripes */}
         <div className="absolute bottom-0 right-2 top-0 w-2 bg-stripes" />
 
-        {/* Sign In */}
-        <Link
-          href="#"
-          className="flex items-center gap-3 text-left transition-colors hover:text-gray-50"
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400">
-            <User className="h-5 w-5 text-gray-500" />
-          </div>
+        {isAuthenticated ? <Profile /> : <SignIn />}
 
-          <p className="max-w-[140px] text-sm leading-snug">
-            <span>Crie sua conta</span> e salve suas memórias!
-          </p>
-        </Link>
+        <Hero />
 
-        {/* Hero */}
-        <div className="space-y-5">
-          <Image src={nlwLogo} alt="Logo" />
-
-          <div className="max-w-[420px] space-y-1">
-            <h1 className="text-5xl font-bold leading-tight text-gray-50">
-              Sua cápsula do tempo
-            </h1>
-            <p className="text-lg leading-relaxed">
-              Colecione momentos marcantes da sua jornada e compartilhe (se
-              quiser) com o mundo!
-            </p>
-          </div>
-
-          <Link
-            href="#"
-            className="inline-block rounded-full bg-green-500 px-5 py-3 font-alt text-sm uppercase leading-none text-black transition-colors hover:bg-green-600"
-          >
-            CADASTRAR LEMBRANÇA
-          </Link>
-        </div>
-
-        {/* CopyRight */}
-        <div className="text-sm leading-relaxed text-gray-200">
-          Feito com 💜 no NLW da{' '}
-          <Link
-            className="underline hover:text-gray-100"
-            href="https://rocketseat.com.br"
-            rel="noreferrer"
-            target="_blank"
-          >
-            Rocketseat
-          </Link>
-        </div>
+        <CopyRight />
       </div>
 
       {/* Right */}
       <div className="flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover p-16">
-        <div className="flex flex-1 items-center justify-center">
-          <p className="w-[360px] text-center leading-relaxed">
-            Você ainda não registrou nenhuma lembrança, comece a{' '}
-            <Link className="underline hover:text-gray-50" href="#">
-              criar agora
-            </Link>
-            !
-          </p>
-        </div>
+        <EmptyMemories />
       </div>
     </main>
   )
