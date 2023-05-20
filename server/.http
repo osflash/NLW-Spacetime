@@ -41,3 +41,8 @@ content-type: application/json
 {
   "code": "5ffae7f3645293e75ce4"
 }
+
+###
+
+POST http://localhost:3333/upload
+Content-Type: multipart/form-data

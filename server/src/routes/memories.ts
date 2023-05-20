@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { prisma } from '../lib/prisma'
+import { prisma } from '../services/prisma'
 
 import { z } from 'zod'
 

@@ -1,24 +1,12 @@
 import React, { useEffect } from 'react'
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-import { BaiJamjuree_700Bold } from '@expo-google-fonts/bai-jamjuree'
-import {
-  useFonts,
-  Roboto_400Regular,
-  Roboto_700Bold,
-} from '@expo-google-fonts/roboto'
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import { useRouter } from 'expo-router'
 import * as SecureStore from 'expo-secure-store'
-import { StatusBar } from 'expo-status-bar'
-import { styled } from 'nativewind'
 
-import blurBg from '../src/assets/bg-blur.png'
 import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
-import Stripes from '../src/assets/stripes.svg'
 import { api } from '../src/services/api'
-
-const StylesStripes = styled(Stripes)
 
 const discovery = {
   authorizationEndpoint: 'https://github.com/login/oauth/authorize',
@@ -29,12 +17,6 @@ const discovery = {
 
 const App: React.FC = () => {
   const router = useRouter()
-
-  const [hasLoadedFonts] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-    BaiJamjuree_700Bold,
-  })
 
   const [, response, signInWithGithub] = useAuthRequest(
     {
@@ -67,18 +49,8 @@ const App: React.FC = () => {
     }
   }, [response])
 
-  if (!hasLoadedFonts) {
-    return null
-  }
-
   return (
-    <ImageBackground
-      source={blurBg}
-      className="relative flex-1 items-center justify-center bg-zinc-900 px-8 py-10"
-      imageStyle={{ position: 'absolute', left: '-100%' }}
-    >
-      <StylesStripes className="absolute left-2" />
-
+    <View className="flex-1 items-center justify-center px-8 py-10">
       <View className="flex-1 items-center justify-center gap-6">
         <NLWLogo />
 
@@ -106,9 +78,7 @@ const App: React.FC = () => {
       <Text className="text-center font-body text-sm leading-relaxed text-gray-200">
         Feito com 💜 no NLW da Rocketseat
       </Text>
-
-      <StatusBar style="light" translucent />
-    </ImageBackground>
+    </View>
   )
 }
 
