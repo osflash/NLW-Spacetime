@@ -40,9 +40,9 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
       className={`${roboto.variable} ${baiJamjuree.variable} bg-gray-900 font-sans text-gray-100`}
     >
       <body className="bg-zinc-900 text-zinc-200">
-        <main className="grid min-h-screen grid-cols-2">
+        <main className="grid grid-cols-2 max-md:flex max-md:flex-col">
           {/* Left */}
-          <div className="relative flex flex-col items-start justify-between overflow-hidden border-r border-white/10 bg-[url(../assets/bg-stars.svg)] bg-cover px-28 py-16">
+          <div className="relative flex flex-col items-start justify-between gap-5 overflow-hidden border-white/10 bg-[url(../assets/bg-stars.svg)] bg-cover p-8 sm:px-28 sm:py-16 md:border-r">
             {/* Blur */}
             <div className="absolute right-0 top-1/2 h-[288px] w-[526px] -translate-y-1/2 translate-x-1/2 rounded-full bg-purple-700 opacity-50 blur-full" />
 
@@ -53,12 +53,21 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
 
             <Hero />
 
-            <CopyRight />
+            <div className="max-md:hidden">
+              <CopyRight />
+            </div>
           </div>
 
           {/* Right */}
-          <div className="flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover p-16">
+          <div className="relative flex flex-col bg-[url(../assets/bg-stars.svg)] bg-cover md:h-screen md:overflow-y-scroll">
+            {/* Stripes */}
+            <div className="absolute bottom-0 right-2 top-0 w-2 bg-stripes md:hidden" />
             <>{children}</>
+
+            {/* CopyRight */}
+            <div className="flex items-center justify-center py-2 md:hidden">
+              <CopyRight />
+            </div>
           </div>
         </main>
       </body>

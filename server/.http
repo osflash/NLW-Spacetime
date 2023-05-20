@@ -3,12 +3,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT3NGbGFza
 
 ###
 
-GET http://localhost:3333/memories/87e3385e-cbcf-454f-80f7-65dbbee82090
+GET http://localhost:3333/memories/fcd41ed8-9ed4-4eba-a4dd-bffccc901e36
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT3NGbGFzaCIsImF2YXRhclVybCI6Imh0dHBzOi8vYXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xNzkxODYyND92PTQiLCJzdWIiOiI3ZjcwYjY5NC03NzIzLTRjMDQtYmNkNi05OGFhMjhjZDNhZWMiLCJpYXQiOjE2ODQzOTg1OTYsImV4cCI6MTY4Njk5MDU5Nn0.d3mlGV3qjyYJWbFBByxQB_I0Nwzobp-e3jTBqHXArqE
 
 ###
 
 POST http://localhost:3333/memories
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT3NGbGFzaCIsImF2YXRhclVybCI6Imh0dHBzOi8vYXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xNzkxODYyND92PTQiLCJzdWIiOiI3ZjcwYjY5NC03NzIzLTRjMDQtYmNkNi05OGFhMjhjZDNhZWMiLCJpYXQiOjE2ODQzOTg1OTYsImV4cCI6MTY4Njk5MDU5Nn0.d3mlGV3qjyYJWbFBByxQB_I0Nwzobp-e3jTBqHXArqE
 
 {
   "content": "test",
@@ -18,8 +20,9 @@ content-type: application/json
 
 ###
 
-PUT  http://localhost:3333/memories/87e3385e-cbcf-454f-80f7-65dbbee82090
+PUT  http://localhost:3333/memories/55248526-af3d-429e-81fc-de0fe0b0e681
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiT3NGbGFzaCIsImF2YXRhclVybCI6Imh0dHBzOi8vYXZhdGFycy5naXRodWJ1c2VyY29udGVudC5jb20vdS8xNzkxODYyND92PTQiLCJzdWIiOiI3ZjcwYjY5NC03NzIzLTRjMDQtYmNkNi05OGFhMjhjZDNhZWMiLCJpYXQiOjE2ODQzOTg1OTYsImV4cCI6MTY4Njk5MDU5Nn0.d3mlGV3qjyYJWbFBByxQB_I0Nwzobp-e3jTBqHXArqE
 
 {
   "content": "oi!",
@@ -30,7 +33,7 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:3333/memories/87e3385e-cbcf-454f-80f7-65dbbee82090
+DELETE http://localhost:3333/memories/55248526-af3d-429e-81fc-de0fe0b0e681
 
 
 ###
@@ -39,7 +42,7 @@ POST http://localhost:3333/register
 content-type: application/json
 
 {
-  "code": "5ffae7f3645293e75ce4"
+  "code": "c15e10638a8c9e17d006"
 }
 
 ###

@@ -6,18 +6,86 @@ import {
   Switch,
   TextInput,
   ScrollView,
+  Image,
 } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import Icon from '@expo/vector-icons/Feather'
-import { Link } from 'expo-router'
+import * as ImagePicker from 'expo-image-picker'
+import { Link, useRouter } from 'expo-router'
+import * as SecureStore from 'expo-secure-store'
 
 import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
+import { api } from '../src/services/api'
 
 const NewMemories: React.FC = () => {
   const { bottom, top } = useSafeAreaInsets()
+  const router = useRouter()
 
+  const [loading, setLoading] = useState(false)
+
+  const [preview, setPreview] = useState<string | null>(null)
+
+  const [content, setContent] = useState('')
   const [isPublic, setIsPublic] = useState(false)
+
+  const openImagePicker = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+      })
+
+      if (result.assets[0]) {
+        setPreview(result.assets[0].uri)
+      }
+    } catch (err) {
+      //
+    }
+  }
+
+  const handleCreateMemory = async () => {
+    setLoading(true)
+
+    const token = await SecureStore.getItemAsync('token')
+
+    let coverUrl = ''
+
+    if (preview) {
+      const uploadFormData = new FormData()
+
+      uploadFormData.append('file', {
+        uri: preview,
+        name: 'image.jpg',
+        type: 'image/jpeg',
+      } as any)
+
+      const uploadResponse = await api.post('/upload', uploadFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+
+      coverUrl = uploadResponse.data.cid
+    }
+
+    await api.post(
+      '/memories',
+      {
+        content,
+        isPublic,
+        coverUrl,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    )
+
+    setLoading(false)
+    router.push('/memories')
+  }
 
   return (
     <ScrollView
@@ -50,26 +118,41 @@ const NewMemories: React.FC = () => {
 
         <TouchableOpacity
           activeOpacity={0.7}
+          onPress={openImagePicker}
           className="h-32 items-center justify-center rounded-lg border border-dashed border-gray-500 bg-black/20"
         >
-          <View className="flex-row items-center gap-2">
-            <Icon name="image" color="#fff" />
-            <Text className="font-body text-sm text-gray-200">
-              Adicionar foto ou vídeo de capa
-            </Text>
-          </View>
+          {preview ? (
+            // eslint-disable-next-line jsx-a11y/alt-text
+            <Image
+              source={{ uri: preview }}
+              className="h-full w-full rounded-lg object-cover"
+            />
+          ) : (
+            <View className="flex-row items-center gap-2">
+              <Icon name="image" color="#fff" />
+              <Text className="font-body text-sm text-gray-200">
+                Adicionar foto ou vídeo de capa
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
 
         <TextInput
           multiline
+          value={content}
+          onChangeText={setContent}
           className="p-0 font-body text-lg text-gray-50"
           placeholderTextColor="#56565a"
           placeholder="Fique livre para adicionar fotos, vídeos e relatos sobre essa experiência que você quer lembrar para sempre."
         />
 
         <TouchableOpacity
-          className="mb-5 items-center self-end rounded-full bg-green-500 px-5 py-2"
           activeOpacity={0.7}
+          onPress={handleCreateMemory}
+          disabled={loading}
+          className={`mb-5 items-center self-end rounded-full ${
+            loading ? 'bg-green-800' : 'bg-green-500'
+          } px-5 py-2`}
         >
           <Text className="font-alt text-sm uppercase text-black">Salvar</Text>
         </TouchableOpacity>

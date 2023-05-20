@@ -21,6 +21,7 @@ export const memoriesRoutes = async (app: FastifyInstance) => {
         id: memory.id,
         coverUrl: memory.coverUrl,
         excerpt: memory.content.substring(0, 115).concat('...'),
+        createdAt: memory.createAt,
       }
     })
   })
@@ -32,7 +33,7 @@ export const memoriesRoutes = async (app: FastifyInstance) => {
 
     const { id } = paramsSchema.parse(request.params)
 
-    const memory = await prisma.memory.delete({ where: { id } })
+    const memory = await prisma.memory.findUniqueOrThrow({ where: { id } })
 
     if (!memory.isPublic && memory.userId !== request.user.sub) {
       return reply.status(401).send()
@@ -49,6 +50,8 @@ export const memoriesRoutes = async (app: FastifyInstance) => {
     })
 
     const { content, coverUrl, isPublic } = bodySchema.parse(request.body)
+
+    console.log(content, coverUrl, isPublic)
 
     const memory = await prisma.memory.create({
       data: {
